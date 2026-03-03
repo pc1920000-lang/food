@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ restaurant }} — {{ item.name }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+  <script>
+    const ITEM_ID = {{ item.id }};
+    const TABLE = "{{ table }}"
+  </script>
+</head>
+<body>
+  <header>
+    <div class="site-header">
+      <div class="brand">
+        <h1>{{ restaurant }}</h1>
+        <small>{{ item.name }}</small>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="meta">{% if table %}Table: <strong>{{ table }}</strong>{% endif %}</div>
+        <a class="btn secondary" href="/cart?table={{ table|default('') }}">Cart ({{ cart_count }})</a>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <div class="item-hero">
+      <div>
+        {% if item.image %}
+          <img src="/static/uploads/{{ item.image }}" alt="{{ item.name }}">
+        {% else %}
+          <img src="https://via.placeholder.com/900x600?text={{ item.name }}" alt="{{ item.name }}">
+        {% endif %}
+        <h2 style="margin-top:12px">{{ item.name }}</h2>
+        <p class="card-desc">{{ item.description }}</p>
+      </div>
+      <aside class="card" style="padding:18px">
+        <div class="card-body">
+          <div class="price" style="font-size:20px">₹{{ '%.2f'|format(item.price) }}</div>
+          <div style="height:12px"></div>
+          <div class="qty">
+            <label>Qty: <input id="qty" type="number" value="1" min="1"></label>
+          </div>
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:8px">
+            <button id="addBtn" class="btn">Add to cart</button>
+            <button id="orderNow" class="btn secondary">Order & Pay</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <div style="margin-top:18px">
+      <a class="btn" href="/cart?table={{ table }}">View Cart</a>
+    </div>
+  </main>
+</body>
+</html>

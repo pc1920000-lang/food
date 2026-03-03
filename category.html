@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ restaurant }} — {{ category }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="site-header">
+      <div class="brand">
+        <h1>{{ restaurant }}</h1>
+        <small>{{ category }}</small>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="meta">{% if table %}Table: <strong>{{ table }}</strong>{% endif %}</div>
+        <a class="btn secondary" href="/cart?table={{ table|default('') }}">Cart ({{ cart_count }})</a>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <h2>{{ category }}</h2>
+    <div class="grid">
+    {% for it in items %}
+      <article class="card">
+        <a href="/item/{{ it.id }}?table={{ table }}">
+          {% if it.image %}
+            <img src="/static/uploads/{{ it.image }}" alt="{{ it.name }}">
+          {% else %}
+            <img src="https://via.placeholder.com/400x250?text={{ it.name }}" alt="{{ it.name }}">
+          {% endif %}
+        </a>
+        <div class="card-body">
+          <h3 class="card-title">{{ it.name }}</h3>
+          <p class="card-desc">{{ it.description or 'Delicious choice.' }}</p>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <a class="btn secondary" href="/item/{{ it.id }}?table={{ table }}">View</a>
+            <div class="price">₹{{ '%.2f'|format(it.price) }}</div>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+    </div>
+  </main>
+</body>
+</html>

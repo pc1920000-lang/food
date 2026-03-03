@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;600&display=swap');
+
+:root{
+    --accent:#114b44;    /* deep teal */
+    --accent-2:#b07a4b;  /* warm wood */
+    --muted:#6b5a50;     /* muted brown */
+    --bg:#f6efe7;        /* soft cream */
+    --card:#ffffff;
+    --glass: rgba(255,255,255,0.6);
+    --radius:14px;
+}
+
+*{box-sizing:border-box}
+body{
+    font-family: Inter, Arial, sans-serif;
+    color:#2b2b2b;
+    background: linear-gradient(180deg, var(--bg), #f8f6f4);
+    margin:0;padding:0;
+}
+
+header{
+    padding:22px 18px;
+    background: linear-gradient(90deg, rgba(17,75,68,0.03), transparent);
+    border-bottom:1px solid rgba(176,122,75,0.06);
+}
+.site-header{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:14px}
+.brand h1{font-family: 'Playfair Display', serif;margin:0;font-size:22px;color:var(--accent)}
+.brand small{display:block;color:var(--muted);font-size:13px}
+.container{max-width:1100px;margin:26px auto;padding:0 18px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.card{background:linear-gradient(180deg, var(--card), var(--glass));border-radius:var(--radius);overflow:hidden;border:1px solid rgba(176,122,75,0.06);box-shadow:0 10px 30px rgba(16,16,16,0.04);transition:transform .18s ease}
+.card:hover{transform:translateY(-6px)}
+.card img{width:100%;height:170px;object-fit:cover;display:block}
+.card-body{padding:16px}
+.card-title{font-family:'Playfair Display', serif;font-size:18px;margin:0 0 6px;color:#1f3b34}
+.card-desc{font-size:13px;color:var(--muted);margin:0 0 10px}
+.price{font-weight:700;color:var(--accent)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;text-decoration:none;cursor:pointer;font-weight:600}
+.btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(176,122,75,0.06)}
+.meta{font-size:13px;color:var(--muted)}
+
+.cart-bar{position:fixed;right:18px;bottom:18px;background:var(--card);padding:12px 16px;border-radius:12px;box-shadow:0 12px 28px rgba(16,16,16,0.06);border:1px solid rgba(176,122,75,0.04)}
+.cart-bar a{color:var(--accent);font-weight:700;text-decoration:none}
+
+main h2{margin-top:0;font-family:'Playfair Display', serif}
+
+/* item page */
+.item-hero{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start}
+.item-hero img{width:100%;height:360px;object-fit:cover;border-radius:10px}
+.qty{display:flex;gap:8px;align-items:center}
+.qty input{width:86px;padding:10px;border-radius:8px;border:1px solid #e9e2da}
+
+@media (max-width:900px){
+    .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+    .item-hero{grid-template-columns:1fr}
+    .card img{height:200px}
+}
+
+@media (max-width:600px){
+    .site-header{padding:12px}
+    .brand h1{font-size:18px}
+    .container{padding:12px}
+    .grid{grid-template-columns:1fr}
+    .card img{height:220px}
+    .card-body{padding:12px}
+    .card-title{font-size:16px}
+    .cart-bar{right:10px;left:10px;bottom:14px;display:flex;justify-content:space-between;align-items:center;padding:12px}
+    .btn{flex:1;padding:12px;border-radius:10px}
+    aside.card{padding:12px}
+}
+
+/* Accessibility focus */
+.btn:focus{outline:3px solid rgba(17,75,68,0.12);outline-offset:3px}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+:root{
+    --accent:#e67e22; /* warmer orange accent */
+    --muted:#555555;
+    --bg:#fff7f0;
+    --card:#ffffff;
+}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;color:#222;background:var(--bg);margin:0;padding:0}
+.site-header{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+header{background:linear-gradient(90deg, rgba(230,126,34,0.06), transparent);padding:18px 20px;border-bottom:1px solid #f0e0db}
+.site-header{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.brand h1{margin:0;font-size:20px}
+.brand small{display:block;color:var(--muted);font-size:13px}
+.container{max-width:1100px;margin:20px auto;padding:0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.card{background:var(--card);border-radius:14px;box-shadow:0 6px 18px rgba(20,20,20,0.04);overflow:hidden;border:1px solid #f3e6df}
+.card img{width:100%;height:160px;object-fit:cover;display:block}
+.card-body{padding:14px}
+.card-title{font-weight:600;margin:0 0 6px}
+.card-desc{font-size:13px;color:var(--muted);margin:0 0 10px}
+.price{font-weight:700;color:var(--accent)}
+.btn{display:inline-block;padding:8px 12px;border-radius:12px;border:0;background:var(--accent);color:#fff;text-decoration:none;cursor:pointer;font-weight:600}
+.btn.secondary{background:#fff;color:var(--accent);border:1px solid #f0e0db}
+.meta{font-size:13px;color:var(--muted)}
+.cart-bar{position:fixed;right:20px;bottom:20px;background:var(--card);padding:12px 16px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.06);border:1px solid #f0e0db}
+.cart-bar a{color:var(--accent);font-weight:600}
+main h2{margin-top:0}
+/* item page */
+.item-hero{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start}
+.item-hero img{width:100%;height:360px;object-fit:cover;border-radius:10px}
+.qty{display:flex;gap:8px;align-items:center}
+.qty input{width:72px;padding:8px;border-radius:8px;border:1px solid #ddd}
+@media (max-width:800px){
+    .item-hero{grid-template-columns:1fr;}
+    .card img{height:180px}
+}
+
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;           /* makes <a> behave like a block element */
+    height: 100%;             /* important in grid/flex layouts */
+}
+
+/* Optional: visual feedback when hovering/focusing the whole card */
+.card-link:hover .card,
+.card-link:focus .card {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    outline: none;            /* remove default focus outline if you add custom one */
+}
+
+/* Optional: custom focus style for accessibility */
+.card-link:focus-visible .card {
+    outline: 3px solid #0066cc;
+    outline-offset: 3px;
+}
+
+/* Make sure the card itself doesn't interfere */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;             /* helps in equal-height grid */
+}
+
+.root{--gap:16px}
+/* Responsive improvements and polish */
+:root{--gap:16px}
+.brand img{width:56px;height:56px;border-radius:10px;object-fit:cover}
+.card{transition:transform .18s ease, box-shadow .18s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(20,20,20,0.08)}
+.btn{transition:transform .12s ease, box-shadow .12s ease}
+.btn:active{transform:translateY(1px)}
+
+/* Small screens */
+@media (max-width:600px){
+	.site-header{padding:10px}
+	.brand h1{font-size:18px}
+	.container{padding:12px}
+	.grid{grid-template-columns:1fr}
+	.card img{height:220px}
+	.card-body{padding:12px}
+	.card-title{font-size:16px}
+	.card-desc{font-size:13px}
+	.cart-bar{right:12px;left:12px;bottom:14px;display:flex;justify-content:space-between;align-items:center;padding:12px}
+	.cart-bar a{font-size:15px}
+	.btn{flex:1;padding:12px;border-radius:10px}
+	.btn.secondary{padding:12px}
+	.item-hero img{height:280px}
+	aside.card{padding:12px}
+	/* header cart button more prominent on small screens */
+	.site-header .btn.secondary{display:inline-flex}
+}
+
+/* Accessibility focus */
+.btn:focus{outline:3px solid rgba(192,57,43,0.12);outline-offset:2px}

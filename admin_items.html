@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Items</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="site-header">
+      <div class="brand"><h1>Menu Items</h1><small>Add or edit menu entries</small></div>
+      <div class="meta"><a href="/admin">Back</a> | <a href="/admin/logout">Logout</a></div>
+    </div>
+  </header>
+  <main class="container">
+    <div class="card">
+      <div class="card-body">
+        <h3>Add New Item</h3>
+        <form method="post" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:8px">
+          <input name="name" placeholder="Name" required style="padding:10px;border-radius:8px;border:1px solid #eee">
+          <input name="category" placeholder="Category" required style="padding:10px;border-radius:8px;border:1px solid #eee">
+          <input name="price" type="number" step="0.01" placeholder="Price" required style="padding:10px;border-radius:8px;border:1px solid #eee">
+          <input name="description" placeholder="Short description" style="padding:10px;border-radius:8px;border:1px solid #eee">
+          <label style="font-size:13px;color:var(--muted)">Image (optional): <input type="file" name="image" accept="image/*"></label>
+          <div style="display:flex;gap:8px">
+            <button type="submit" class="btn">Add Item</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <h3 style="margin-top:18px">Existing Items</h3>
+    <div class="grid">
+    {% for it in items %}
+      <div class="card">
+        {% if it.image %}
+        <img src="/static/uploads/{{ it.image }}" alt="{{ it.name }}">
+        {% else %}
+        <img src="https://via.placeholder.com/400x250?text={{ it.name }}" alt="{{ it.name }}">
+        {% endif %}
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="card-title">{{ it.name }}</div>
+              <div class="meta">{{ it.category }}</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-weight:700">₹{{ '%.2f'|format(it.price) }}</div>
+              <div class="meta">{% if it.available %}Available{% else %}Unavailable{% endif %}</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <form method="post" action="/admin/item/toggle/{{ it.id }}">
+              <button class="btn secondary" type="submit">{% if it.available %}Available{% else %}Unavailable{% endif %}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </main>
+</body>
+</html>

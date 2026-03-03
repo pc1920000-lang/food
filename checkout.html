@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout — {{ restaurant }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="site-header">
+      <div class="brand"><h1>{{ restaurant }}</h1><small>Checkout</small></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        {% if table %}<div class="meta">Table: <strong>{{ table }}</strong></div>{% endif %}
+        <a class="btn secondary" href="/cart?table={{ table|default('') }}">Cart ({{ cart|length }})</a>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <h2>Confirm your order</h2>
+    <div class="card">
+      <div class="card-body">
+        <ul style="list-style:none;padding:0;margin:0">
+          {% for it in cart %}
+          <li style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f6f0ef">
+            <div><strong>{{ it.name }}</strong><div class="meta">Qty: {{ it.qty }}</div></div>
+            <div>₹{{ '%.2f'|format(it.price * it.qty) }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+        <div style="display:flex;justify-content:space-between;padding-top:12px"><div class="meta">Total</div><div class="price">₹{{ '%.2f'|format(total) }}</div></div>
+        <form method="post" action="/order/create" style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+          <input name="table" type="hidden" value="{{ table }}">
+          <input name="name" placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid #eee">
+          <input name="phone" placeholder="Phone number" required style="padding:10px;border-radius:8px;border:1px solid #eee">
+          <div style="display:flex;gap:8px">
+            <button class="btn" type="submit">Place Order</button>
+            <a class="btn secondary" href="/cart?table={{ table }}">Back to cart</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

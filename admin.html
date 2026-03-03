@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+  <script>
+    const socket = io();
+    socket.on('new_order', (data) => {
+      const el = document.getElementById('orders')
+      const card = document.createElement('div')
+      card.className = 'card'
+      card.innerHTML = `<div class="card-body"><div style="display:flex;justify-content:space-between"><div><strong>Order #${data.order_id}</strong><div class="meta">Table ${data.table}</div></div><div>${data.total} €</div></div><div style="margin-top:10px"><button data-id="${data.order_id}" class="btn accept">Mark Preparing</button> <button data-id="${data.order_id}" class="btn secondary">Mark Done</button></div></div>`
+      el.prepend(card)
+    })
+    socket.on('order_update', (d)=>{
+      const el = document.querySelector(`[data-order='${d.order_id}'] .status`)
+      if(el) el.textContent = d.status
+    })
+
+    async function adminAction(ev){
+      const id = ev.target.dataset.id
+      const status = ev.target.classList.contains('accept') ? 'preparing' : 'done'
+      await fetch(`/admin/order/update/${id}`, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: `status=${status}`})
+      const node = document.querySelector(`[data-order='${id}'] .status`)
+      if(node) node.textContent = status
+    }
+
+    document.addEventListener('click', (e)=>{
+      if(e.target.matches('.btn.accept') || e.target.matches('.btn.secondary')) adminAction(e)
+    })
+  </script>
+</head>
+<body>
+  <header>
+    <div class="site-header">
+      <div class="brand"><h1>Admin</h1><small>Orders & Menu</small></div>
+      <div class="meta"><a href="/admin/items" class="meta">Manage Items</a> | <a href="/admin/logout" class="meta">Logout</a></div>
+    </div>
+  </header>
+  <main class="container">
+    <h2>Live Orders</h2>
+    <div id="orders">
+    {% for o in orders %}
+      <div class="card" data-order="{{ o.id }}">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700">Order #{{ o.id }}</div>
+              <div class="meta">Table {{ o.table_number }} — <span class="status">{{ o.status }}</span></div>
+            </div>
+            <div style="font-weight:700">₹{{ '%.2f'|format(o.total) }}</div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button data-id="{{ o.id }}" class="btn accept">Mark Preparing</button>
+            <button data-id="{{ o.id }}" class="btn secondary">Mark Done</button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </main>
+</body>
+</html>

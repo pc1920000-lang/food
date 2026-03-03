@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ restaurant }} — Cart</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="site-header">
+      <div class="brand"><h1>{{ restaurant }}</h1><small>Your Order</small></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="meta">{% if table %}Table: <strong>{{ table }}</strong>{% endif %}</div>
+        <a class="btn secondary" href="/cart?table={{ table|default('') }}">Cart ({{ cart_count }})</a>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <h2>Your Cart</h2>
+    {% if cart %}
+    <div class="card">
+      <div class="card-body">
+        <ul style="margin:0;padding:0;list-style:none">
+          {% for it in cart %}
+          <li style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f6f0ef">
+            <div>
+              <div style="font-weight:600">{{ it.name }}</div>
+              <div class="meta">Qty: {{ it.qty }} x ₹{{ '%.2f'|format(it.price) }}</div>
+            </div>
+            <div style="font-weight:700">₹{{ '%.2f'|format(it.price * it.qty) }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+        <div style="display:flex;justify-content:space-between;padding-top:14px">
+          <div class="meta">Total</div>
+          <div class="price">₹{{ '%.2f'|format(total) }}</div>
+        </div>
+        <div style="height:12px"></div>
+        <button id="placeOrder" class="btn">Place Order & Pay</button>
+      </div>
+    </div>
+    {% else %}
+    <p>Cart is empty.</p>
+    {% endif %}
+  </main>
+</body>
+</html>
